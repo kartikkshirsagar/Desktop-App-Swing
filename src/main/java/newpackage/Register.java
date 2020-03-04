@@ -3,6 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package newpackage;
 
 import java.awt.Color;
@@ -28,7 +29,7 @@ import java.util.regex.Pattern;
 public class Register {
 
     private JFrame frame;
-    private JLabel namelabel, nameHiddenLabel, idlabel, idLabelHidden, passlabel, passHiddenLabel, mobnoLabel, mobnoHiddenLabel, status;
+    private JLabel namelabel, nameHiddenLabel, idlabel, idLabelHidden, passlabel, passHiddenLabel, mobnoLabel, mobnoHiddenLabel,status;
     private JTextField namef, idf, mobnof;
     private JPasswordField passwordf;
     private JButton btn;
@@ -119,27 +120,28 @@ public class Register {
         x.gridwidth = 2;
         x.anchor = GridBagConstraints.CENTER;
         x.insets = new Insets(20, 0, 0, 0);
-        frame.add(status, x);
+        frame.add(status,x);
         status.setText("                     ");
+        
 
         frame.pack();
         btn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
-                boolean b;
-                int ret;
+                boolean b;int ret;
                 b = control();
                 if (b == true) {
                     //Register user..
-                    ret = register();
-                    if (ret == 1) {
+                    ret=register();
+                    if(ret==1)
+                    {
                         idf.setText("");
                         mobnof.setText("");
                         passwordf.setText("");
                         namef.setText("");
                     }
                     new Login();
-
+                    frame.dispose();
                 }
             }
         });
@@ -192,37 +194,37 @@ public class Register {
     }
 
     int register() {
-        int m = 0;
+        int m=0;
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/AWPusers_and_Login", "kartik", "Kartik1901");
-            Statement sta = con.createStatement();
-            String name = namef.getText();
-            String id = idf.getText();
-            String pass = passwordf.getText();
-            String mobno = mobnof.getText();
-            try {
-                String query = "INSERT INTO Users VALUES('" + name + "','" + id + "','" + mobno + "','" + pass + "')";
-                m = sta.executeUpdate(query);
-                if (m == 1) {
-                    idLabelHidden.setText("");
-                    mobnoHiddenLabel.setText("");
-                    passHiddenLabel.setText("");
-                    nameHiddenLabel.setText("");
-                    status.setText("Registration Successful");
-                }
-            } catch (SQLDataException e) {
-
+            Statement sta= con.createStatement();
+            String name=namef.getText();String id = idf.getText();String pass=passwordf.getText();String mobno = mobnof.getText();
+           try{
+           String query= "INSERT INTO Users VALUES('"+name+"','"+id+"','"+mobno+"','"+pass+"')";
+           m = sta.executeUpdate(query);
+           if(m==1)
+            {
+                idLabelHidden.setText("");
+                mobnoHiddenLabel.setText("");
+                passHiddenLabel.setText("");
+                nameHiddenLabel.setText("");
+                status.setText("Registration Successful");
             }
-
+           }catch(SQLDataException e){
+               
+           }
+               
         } catch (Exception ex) {
             Logger.getLogger(Register.class.getName()).log(Level.SEVERE, null, ex);
-            if (ex.getMessage().substring(0, 17).equals("Incorrect integer")) {
+            if(ex.getMessage().substring(0, 17).equals("Incorrect integer"))
+            {
                 idLabelHidden.setText("* Please enter integer id");
-            } else {
-                status.setText(ex.getMessage().substring(0, 16));
             }
-
+            else{
+                status.setText(ex.getMessage().substring(0, 17));
+            }
+            
         }
         return m;
 
