@@ -140,6 +140,8 @@ public class Register {
                         passwordf.setText("");
                         namef.setText("");
                     }
+                    JOptionPane op = new JOptionPane(null, ret);
+                    op.setVisible(true);
                     new Login();
                     frame.dispose();
                 }
