@@ -38,7 +38,7 @@ public class studentpanel {
     private String checkUser,checkPass;
     private String mobno1,id1,name1,pass1;
     boolean login1 = false;
-    private JButton logout;
+    private JButton logout,feebtn;
     
     public studentpanel()
     {
@@ -96,6 +96,7 @@ public class studentpanel {
         l3=new JLabel("Mobile Number: ");
         l4=new JLabel("Password: ");
         logout=new JButton("LogOut");
+        feebtn = new JButton("Pay your Fees");
         panel.setBackground(Color.white);
         GridBagConstraints c=new GridBagConstraints();
         c.insets=new Insets(15,15,0,15);
@@ -138,9 +139,23 @@ public class studentpanel {
         c.gridx=0;
         c.gridy=4;
         c.gridwidth=2;
-        c.anchor=GridBagConstraints.CENTER;
+        c.anchor=GridBagConstraints.LINE_END;
         panel.add(logout,c);
+        c.gridx=0;
+        c.gridy=4;
+        c.gridwidth=2;
+        c.anchor=GridBagConstraints.LINE_START;
+        panel.add(feebtn,c);
+        
         frame.setVisible(true);
+        
+        feebtn.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent ae) {
+                        //frame.dispose();
+                        new FeePayment();
+                    }
+        });
         
         logout.addActionListener(new ActionListener(){
             @Override
