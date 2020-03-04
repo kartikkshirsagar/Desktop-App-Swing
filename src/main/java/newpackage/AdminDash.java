@@ -67,6 +67,7 @@ public class AdminDash {
         String[] columnNames = {"Name", "ID", "Mobile Number", "Password"};
         // Frame Title 
         f.setTitle("Admin Panel");
+        f.setLocation(300, 150);
         j = new JTable(data, columnNames);
         btn = new JButton("Delete");
         btn1 = new JButton("Logout");
