@@ -8,6 +8,8 @@
  *
  * @author Dell
  */
+package newpackage;
+
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
@@ -27,7 +29,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.*;
 
-public class login{
+public class Login{
     
     private JFrame frame;
     private JLabel username,password,alert;
@@ -37,7 +39,7 @@ public class login{
     private JButton submit,registerbtn;
     boolean login1=false;
     
-    public login(){
+    public Login(){
         frame=new JFrame("Login");
         
         frame.setSize(500, 500);
@@ -47,13 +49,13 @@ public class login{
         
         
         
-        try{
+        /*try{
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
             
         }catch(ClassNotFoundException | UnsupportedLookAndFeelException | InstantiationException | IllegalAccessException e)
         {
             System.err.println("Unsupported look and feel");
-        }
+        }*/
         username=new JLabel("Username:");
         password=new JLabel("Password:");
         user=new JTextField();
@@ -125,10 +127,10 @@ public class login{
                         String pwd=pass.getText();
                         try {
                             Class.forName("com.mysql.jdbc.Driver");
-                        try (Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/studentdetails", "root", "Suruchi@2001")) {
+                        try (Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/AWPusers_and_Login", "kartik", "Kartik1901")) {
                             java.sql.Statement sta= con.createStatement();
                           
-                            String query= "SELECT Name,Password FROM Users WHERE Name=? AND Password=?";
+                            String query= "SELECT Name,pass FROM Users WHERE Name=? AND pass=?";
                             PreparedStatement ps=con.prepareStatement(query);
                             //ps.setString(1,ID);
                             ps.setString(1, username);
@@ -160,24 +162,28 @@ public class login{
        
                             
                         } catch (ClassNotFoundException | SQLException ex) {
-                            Logger.getLogger(login.class.getName()).log(Level.SEVERE, null, ex);
+                            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
                         }
                     }
                     else
                     {
                         
-                        if(choose.getSelectedIndex()==0)
+                       /* if(choose.getSelectedIndex()==0)
                         {
                             alert.setText("Please login as student!!!");
                         }
-                        else{
+                        else{*/
                             String username=user.getText();
                             String pwd=pass.getText();
                             if(username.equals("admin") && pwd.equals("admin1"))
                             {
+                                frame.dispose();
                                 new AdminDash();
                             }
-                        }
+                            else{
+                            alert.setText("Please login as student!");
+                            }
+                        //}
                         
                     }
                 }
@@ -200,8 +206,9 @@ public class login{
                     alert.setText("Please register as student!!!");
                 }
                 else{
-                    new Register();
                     frame.dispose();
+                    new Register();
+                    
                 }
                 
             }
@@ -221,6 +228,6 @@ public class login{
     }
     
     public static void main(String args[]) {
-        login loginform = new login();
+        Login loginform = new Login();
     }
 }
